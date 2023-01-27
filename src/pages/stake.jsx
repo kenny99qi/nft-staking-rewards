@@ -17,6 +17,7 @@ import {
     tokenContractAddress,
 } from "@/consts/contractAddresses";
 import styles from "../styles/Home.module.css";
+import Loader from "@/components/Loader/Loader";
 
 const Stake = () => {
     const address = useAddress();
@@ -63,10 +64,8 @@ const Stake = () => {
     }
 
     if (isLoading) {
-        return <div>Loading</div>;
+        return <Loader />;
     }
-
-    console.log(ownedNfts)
 
     return (
         <div className={`
@@ -79,7 +78,6 @@ const Stake = () => {
             <hr className={`
             w-1/2 my-4
             `} />
-
             {!address ? (
                 <ConnectWallet />
             ) : (
