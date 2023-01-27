@@ -69,20 +69,32 @@ const Stake = () => {
     return (
         <div className={`
         bg-white flex flex-col items-center justify-center min-h-screen
-        py-2 px-4 sm:px-6 lg:px-8 font-sans text-gray-900 text-sm
-        
+        py-20 px-4 sm:px-6 lg:px-8 font-sans text-gray-900 text-sm
         `}>
-            <h1 className={``}>Stake Your NFTs</h1>
-            <hr className={``} />
+            <h1 className={`
+            text-3xl font-bold
+            `}>Stake Your NFTs</h1>
+            <hr className={`
+            w-1/2 my-4
+            `} />
 
             {!address ? (
                 <ConnectWallet />
             ) : (
                 <>
-                    <h2>Your Tokens</h2>
-                    <div className={``}>
-                        <div className={``}>
-                            <h3 className={``}>Claimable Rewards</h3>
+                    <h2 className={`
+                    text-2xl font-bold text-gray-900
+                    `}>Your Tokens</h2>
+                    <div className={`
+                    flex flex-col sm:flex-row justify-between
+                    w-9/12
+                    `}>
+                        <div className={`
+                        flex flex-col items-center justify-center
+                        `}>
+                            <h3 className={`
+                            text-center mb-2 text-lg font-bold text-gray-900
+                            `}>Claimable Rewards</h3>
                             <p className={``}>
                                 <b>
                                     {!claimableRewards
@@ -92,8 +104,12 @@ const Stake = () => {
                                 {tokenBalance?.symbol}
                             </p>
                         </div>
-                        <div className={``}>
-                            <h3 className={``}>Current Balance</h3>
+                        <div className={`
+                        flex flex-col items-center justify-center
+                        `}>
+                            <h3 className={`
+                            text-center mb-2 text-lg font-bold text-gray-900
+                            `}>Current Balance</h3>
                             <p className={``}>
                                 <b>{tokenBalance?.displayValue}</b> {tokenBalance?.symbol}
                             </p>
@@ -107,28 +123,55 @@ const Stake = () => {
                         Claim Rewards
                     </Web3Button>
 
-                    <hr className={``} />
-                    <h2>Your Staked NFTs</h2>
-                    <div className={``}>
+                    <hr className={`
+                    w-1/2 my-4
+                    `} />
+                    <h2 className={`
+                    text-2xl font-bold text-gray-900
+                    `}>Your Staked NFTs</h2>
+                    <div className={`
+                    grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4
+                    w-full max-w-7xl mx-auto
+                    `}>
                         {stakedTokens &&
                             stakedTokens[0]?.map((stakedToken) => (
                                 <NFTCard
                                     tokenId={stakedToken.toNumber()}
                                     key={stakedToken.toString()}
                                 />
-                            ))}
+                            ))
+                        }
+                    </div>
+                    <div className={`
+                                text-center text-lg text-gray-900 w-full
+                                my-4
+                                `}>
+                        You have no staked NFTs yet.
+                        <br/>
+                        Stake your NFTs to earn rewards.
                     </div>
 
-                    <hr className={``} />
-                    <h2>Your Unstaked NFTs</h2>
-                    <div className={``}>
+                    <hr className={`
+                    w-1/2 my-4
+                    `} />
+                    <h2 className={`
+                    text-2xl font-bold text-gray-900
+                    `}>Your Unstaked NFTs</h2>
+                    <div className={`
+                    grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4
+                    w-full max-w-7xl mx-auto
+                    `}>
                         {ownedNfts?.map((nft) => (
-                            <div className={``} key={nft.metadata.id.toString()}>
+                            <div className={`
+                                flex flex-col items-center justify-center
+                            `} key={nft.metadata.id.toString()}>
                                 <ThirdwebNftMedia
                                     metadata={nft.metadata}
                                     className={``}
                                 />
-                                <h3>{nft.metadata.name}</h3>
+                                <h3 className={`
+                                text-center mb-2 text-lg font-bold text-gray-900
+                                `}>{nft.metadata.name}</h3>
                                 <Web3Button
                                     contractAddress={stakingContractAddress}
                                     action={() => stakeNft(nft.metadata.id)}
