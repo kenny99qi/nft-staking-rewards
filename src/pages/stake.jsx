@@ -49,7 +49,7 @@ const Stake = () => {
         loadClaimableRewards().then();
     }, [address, contract]);
 
-    async function stakeNft() {
+    async function stakeNft(id) {
         if (!address) return;
 
         const isApproved = await nftDropContract?.isApproved(
@@ -65,6 +65,8 @@ const Stake = () => {
     if (isLoading) {
         return <div>Loading</div>;
     }
+
+    console.log(ownedNfts)
 
     return (
         <div className={`
