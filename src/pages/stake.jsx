@@ -38,15 +38,17 @@ const Stake = () => {
         address
     );
 
+    async function loadClaimableRewards() {
+        const stakeInfo = await contract?.call("getStakeInfo", address);
+        setClaimableRewards(stakeInfo[1]);
+    }
+
     useEffect(() => {
         if (!contract || !address) return;
 
-        async function loadClaimableRewards() {
-            const stakeInfo = await contract?.call("getStakeInfo", address);
-            setClaimableRewards(stakeInfo[1]);
-        }
-
-        loadClaimableRewards().then();
+        setInterval(() => {
+            loadClaimableRewards().then();
+        }, 10000);
     }, [address, contract]);
 
     async function stakeNft(id) {
