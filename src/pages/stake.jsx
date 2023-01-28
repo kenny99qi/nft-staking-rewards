@@ -16,7 +16,6 @@ import {
     stakingContractAddress,
     tokenContractAddress,
 } from "@/consts/contractAddresses";
-import styles from "../styles/Home.module.css";
 import Loader from "@/components/Loader/Loader";
 
 const Stake = () => {
