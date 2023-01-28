@@ -142,14 +142,18 @@ const Stake = () => {
                             ))
                         }
                     </div>
-                    <div className={`
+                    {
+                        stakedTokens && stakedTokens[0]?.length === 0 && (
+                            <div className={`
                                 text-center text-lg text-gray-900 w-full
                                 my-4
                                 `}>
-                        You have no staked NFTs yet.
-                        <br/>
-                        Stake your NFTs to earn rewards.
-                    </div>
+                                You have no staked NFTs yet.
+                                <br/>
+                                Stake your NFTs to earn rewards.
+                            </div>
+                        )
+                    }
 
                     <hr className={`
                     w-1/2 my-4
@@ -157,6 +161,16 @@ const Stake = () => {
                     <h2 className={`
                     text-2xl font-bold text-gray-900
                     `}>Your Unstaked NFTs</h2>
+                    <h3 className={`
+                    text-center mb-2 text-lg font-bold text-gray-900
+                    `}>
+                        {ownedNfts?.length} NFTs found
+                    </h3>
+                    <p className={`
+                    text-center mb-2 text-lg text-gray-900 italic
+                    `}>
+                        There will be 2 transactions to confirm if you are staking for the first time.
+                    </p>
                     <div className={`
                     grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4
                     w-full max-w-7xl mx-auto
