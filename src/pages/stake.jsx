@@ -17,26 +17,12 @@ import {
     tokenContractAddress,
 } from "@/consts/contractAddresses";
 import Loader from "@/components/Loader/Loader";
+import {useStateContext} from "@/context";
 
 const Stake = () => {
-    const address = useAddress();
-    const { contract: nftDropContract } = useContract(
-        nftDropContractAddress,
-        "nft-drop"
-    );
-    const { contract: tokenContract } = useContract(
-        tokenContractAddress,
-        "token"
-    );
-    const { contract, isLoading } = useContract(stakingContractAddress);
-    const { data: ownedNfts } = useOwnedNFTs(nftDropContract, address);
-    const { data: tokenBalance } = useTokenBalance(tokenContract, address);
+    const { contract, isLoading, address, nftDropContract,
+        tokenContract, ownedNfts, tokenBalance, stakedTokens, } = useStateContext()
     const [claimableRewards, setClaimableRewards] = useState();
-    const { data: stakedTokens } = useContractRead(
-        contract,
-        "getStakeInfo",
-        address
-    );
 
     async function loadClaimableRewards() {
         const stakeInfo = await contract?.call("getStakeInfo", address);
@@ -49,6 +35,7 @@ const Stake = () => {
         setInterval(() => {
             loadClaimableRewards().then();
         }, 10000);
+
     }, [address, contract]);
 
     async function stakeNft(id) {
@@ -97,7 +84,9 @@ const Stake = () => {
                             text-center mb-2 text-lg font-bold text-gray-900
                             `}>Claimable Rewards</h3>
                             <p className={``}>
-                                <b>
+                                <b className={`
+                                    ${claimableRewards && claimableRewards.gt(0) ? "text-green-500" : "text-gray-900"}
+                                `}>
                                     {!claimableRewards
                                         ? "Loading..."
                                         : ethers.utils.formatUnits(claimableRewards, 18)}
