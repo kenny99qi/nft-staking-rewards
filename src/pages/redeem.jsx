@@ -1,10 +1,12 @@
 import React from 'react';
 import {ConnectWallet, useAddress, useTokenBalance} from "@thirdweb-dev/react";
 import {ethers} from "ethers";
+import {useStateContext} from "@/context";
+import {nftRewardContractAddress} from "@/consts/contractAddresses";
 
 const redeem = () => {
-    const address = useAddress();
-    const { data: tokenBalance } = useTokenBalance(tokenContract, address);
+    const { contract, isLoading, address, nftDropContract,
+        tokenContract, ownedNfts, tokenBalance, stakedTokens, } = useStateContext()
 
     return (
         <div className={`
@@ -25,23 +27,51 @@ const redeem = () => {
                 <>
                 <h2 className={`
                     text-2xl font-bold text-gray-900
-                    `}>Your Tokens</h2>
+                    `}>Current Balance</h2>
                 <div className={`
-                    flex flex-col sm:flex-row justify-between
+                    flex flex-col sm:flex-row justify-center
                     w-9/12
                     `}>
-                    <div className={`
-                        flex flex-col items-center justify-center
+                        <p className={`
+                        text-2xl font-bold text-gray-900 mr-2
                         `}>
-                        <h3 className={`
-                            text-center mb-2 text-lg font-bold text-gray-900
-                            `}>Current Balance</h3>
-                        <p className={``}>
-                            <b>{tokenBalance?.displayValue}</b> {tokenBalance?.symbol}
+                            {
+                                isLoading ? "Loading..." : <b>{tokenBalance?.displayValue}</b>
+                            }&nbsp;
+                            {tokenBalance?.symbol}
                         </p>
-                    </div>
                 </div>
                 </>)}
+            <hr className={`
+            w-1/2 my-4
+            `} />
+            <h1 className={`
+            text-3xl font-bold
+            `}>
+                Rewards Available
+            </h1>
+            {
+                nftRewardContractAddress.map((address, index) =>
+                        <div key={index}>
+                            <h2 className={`
+                            text-2xl font-bold text-gray-900
+                            `}>Rewards for {address}</h2>
+                            <div className={`
+                            flex flex-col sm:flex-row justify-center
+                            w-9/12
+                            `}>
+                                <p className={`
+                                text-2xl font-bold text-gray-900 mr-2
+                                `}>
+                                    {
+                                        isLoading ? "Loading..." : <b>{tokenBalance?.displayValue}</b>
+                                    }&nbsp;
+                                    {tokenBalance?.symbol}
+                                </p>
+                            </div>
+                        </div>
+                    )
+            }
         </div>
     );
 };
