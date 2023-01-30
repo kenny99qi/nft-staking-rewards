@@ -13,11 +13,16 @@ const RewardCard = ({nftRewardContractAddress}) => {
 
     const handleClaim = async () => {
         setLoading(true);
-        const tx = await contract.claimTo(address, 1);
-        setRes(tx)
-        console.log(tx[0]?.receipt?.transactionHash)
-        console.log(parseInt(tx[0]?.id._hex, 16))
-        setLoading(false);
+        try {
+            const tx = await contract.claimTo(address, 1);
+            setRes(tx)
+            console.log(tx[0]?.receipt?.transactionHash)
+            console.log(parseInt(tx[0]?.id._hex, 16))
+            setLoading(false);
+        } catch (e) {
+            console.log(e)
+            setLoading(false);
+        }
     }
 
     return (
