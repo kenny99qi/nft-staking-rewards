@@ -3,6 +3,7 @@ import {ConnectWallet, useAddress, useTokenBalance} from "@thirdweb-dev/react";
 import {ethers} from "ethers";
 import {useStateContext} from "@/context";
 import {nftRewardContractAddress} from "@/consts/contractAddresses";
+import RewardCard from "@/components/Cards/RewardCard";
 
 const redeem = () => {
     const { contract, isLoading, address, nftDropContract,
@@ -52,24 +53,7 @@ const redeem = () => {
             </h1>
             {
                 nftRewardContractAddress.map((address, index) =>
-                        <div key={index}>
-                            <h2 className={`
-                            text-2xl font-bold text-gray-900
-                            `}>Rewards for {address}</h2>
-                            <div className={`
-                            flex flex-col sm:flex-row justify-center
-                            w-9/12
-                            `}>
-                                <p className={`
-                                text-2xl font-bold text-gray-900 mr-2
-                                `}>
-                                    {
-                                        isLoading ? "Loading..." : <b>{tokenBalance?.displayValue}</b>
-                                    }&nbsp;
-                                    {tokenBalance?.symbol}
-                                </p>
-                            </div>
-                        </div>
+                        <RewardCard nftRewardContractAddress={address} key={index} />
                     )
             }
         </div>
