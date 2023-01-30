@@ -51,11 +51,14 @@ const redeem = () => {
             `}>
                 Rewards Available
             </h1>
-            {
-                nftRewardContractAddress.map((address, index) =>
+            <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4
+            `}>
+                {
+                    nftRewardContractAddress.map((address, index) =>
                         <RewardCard nftRewardContractAddress={address} key={index} />
                     )
-            }
+                }
+            </div>
         </div>
     );
 };

@@ -9,4 +9,5 @@ export const wrapperContractAddress =
 
 export const nftRewardContractAddress = [
     "0x56288E8eF6A486479dA4E9a83Ff8d5fac6d15167",
+    "0x33B86e9e1157D1D02204E797C31042cbc397c82d",
 ]

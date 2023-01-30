@@ -23,6 +23,7 @@ const RewardCard = ({nftRewardContractAddress}) => {
     return (
         <div className={`
             flex flex-col items-center justify-center
+            my-5 p-3
         `}>
             {nft?.metadata && (
                 <ThirdwebNftMedia
