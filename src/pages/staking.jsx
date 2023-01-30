@@ -19,7 +19,7 @@ import {
 import Loader from "@/components/Loader/Loader";
 import {useStateContext} from "@/context";
 
-const Stake = () => {
+const Staking = () => {
     const { contract, isLoading, address, nftDropContract,
         tokenContract, ownedNfts, tokenBalance, stakedTokens, } = useStateContext()
     const [claimableRewards, setClaimableRewards] = useState();
@@ -191,4 +191,4 @@ const Stake = () => {
     );
 };
 
-export default Stake;
+export default Staking;
