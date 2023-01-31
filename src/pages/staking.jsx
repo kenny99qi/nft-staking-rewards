@@ -18,10 +18,14 @@ import {
 } from "@/consts/contractAddresses";
 import Loader from "@/components/Loader/Loader";
 import {useStateContext} from "@/context";
+import dynamic from "next/dynamic";
+const AnimatedNumbers = dynamic(() => import("react-animated-numbers"), {
+    ssr: false,
+});
 
 const Staking = () => {
     const { contract, isLoading, address, nftDropContract,
-        tokenContract, ownedNfts, tokenBalance, stakedTokens, } = useStateContext()
+        ownedNfts, tokenBalance, stakedTokens, } = useStateContext()
     const [claimableRewards, setClaimableRewards] = useState();
 
     async function loadClaimableRewards() {
@@ -34,7 +38,7 @@ const Staking = () => {
 
         setInterval(() => {
             loadClaimableRewards().then();
-        }, 10000);
+        }, 30000);
 
     }, [address, contract]);
 
@@ -83,16 +87,22 @@ const Staking = () => {
                             <h3 className={`
                             text-center mb-2 text-lg font-bold text-gray-900
                             `}>Claimable Rewards</h3>
-                            <p className={``}>
-                                <b className={`
-                                    ${claimableRewards && claimableRewards.gt(0) ? "text-green-500" : "text-gray-900"}
-                                `}>
-                                    {!claimableRewards
+                            <div className={`
+                                flex font-bold text-2xl
+                            `}>
+                                <AnimatedNumbers
+                                    animateToNumber={!claimableRewards
                                         ? "Loading..."
                                         : ethers.utils.formatUnits(claimableRewards, 18)}
-                                </b>{" "}
+                                    fontStyle={{ fontSize: 25 }}
+                                    configs={(number, index) => {
+                                        return { mass: 1, tension: 230 * (index + 1), friction: 140 };
+                                    }}
+                                ></AnimatedNumbers>
+                                &nbsp;
                                 {tokenBalance?.symbol}
-                            </p>
+
+                            </div>
                         </div>
                         <div className={`
                         flex flex-col items-center justify-center
@@ -100,9 +110,11 @@ const Staking = () => {
                             <h3 className={`
                             text-center mb-2 text-lg font-bold text-gray-900
                             `}>Current Balance</h3>
-                            <p className={``}>
-                                <b>{tokenBalance?.displayValue}</b> {tokenBalance?.symbol}
-                            </p>
+                            <div className={`
+                                flex font-bold text-2xl
+                            `}>
+                                <b>{tokenBalance?.displayValue}</b> &nbsp;{tokenBalance?.symbol}
+                            </div>
                         </div>
                     </div>
 
