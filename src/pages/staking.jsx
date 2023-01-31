@@ -35,7 +35,7 @@ const Staking = () => {
 
     useEffect(() => {
         if (!contract || !address) return;
-
+        loadClaimableRewards().then()
         setInterval(() => {
             loadClaimableRewards().then();
         }, 30000);
