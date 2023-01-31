@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ThirdwebNftMedia, useContract, useNFT, Web3Button} from "@thirdweb-dev/react";
 import {useStateContext} from "@/context";
+import {ethers} from "ethers";
 
 const RewardCard = ({nftRewardContractAddress}) => {
     const { contract } = useContract(nftRewardContractAddress, "nft-drop");
@@ -9,11 +10,15 @@ const RewardCard = ({nftRewardContractAddress}) => {
     const [res, setRes] = useState(null);
     const [loading, setLoading] = useState(false);
     const [supply, setSupply] = useState(null);
+    const [condition, setCondition] = useState(null);
 
     useEffect(() => {
         const getInfo = async () => {
             const supply = await contract?.totalUnclaimedSupply();
-            setSupply(parseInt(supply._hex, 16))
+            const condition = await contract?.claimConditions.getActive()
+            console.log(ethers.utils.formatEther(condition?.availableSupply))
+            setCondition(condition)
+            setSupply(parseInt(supply?._hex, 16))
         }
         getInfo().then()
     }, []);
@@ -67,7 +72,9 @@ const RewardCard = ({nftRewardContractAddress}) => {
             <p className={`
                 text-center mb-2 text-lg text-gray-900 font-bold
             `}>
-                Price: {nft?.metadata.price}
+                Price: ${
+                condition?.currencyMetadata.displayValue
+            } {condition?.currencyMetadata.symbol}
             </p>
             <button
                 className={`
