@@ -43,6 +43,7 @@ const Navbar = () => {
                         links.map((link, index) =>
                             <Link
                                 href={`${link.path}`}
+                                key={index}
                                 className={`
                                     text-2xl font-bold mr-2 cursor-pointer hover:text-gray-700
                                     transition-all duration-300 ease-in-out 

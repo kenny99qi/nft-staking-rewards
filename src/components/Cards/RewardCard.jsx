@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ThirdwebNftMedia, useContract, useNFT, Web3Button} from "@thirdweb-dev/react";
 import {useStateContext} from "@/context";
 import {ethers} from "ethers";
+import ResCard from "@/components/Cards/ResCard";
 
 const RewardCard = ({nftRewardContractAddress}) => {
     const { contract } = useContract(nftRewardContractAddress, "nft-drop");
@@ -16,7 +17,6 @@ const RewardCard = ({nftRewardContractAddress}) => {
         const getInfo = async () => {
             const supply = await contract?.totalUnclaimedSupply();
             const condition = await contract?.claimConditions.getActive()
-            console.log(ethers.utils.formatEther(condition?.availableSupply))
             setCondition(condition)
             setSupply(parseInt(supply?._hex, 16))
         }
@@ -28,8 +28,6 @@ const RewardCard = ({nftRewardContractAddress}) => {
         try {
             const tx = await contract.claimTo(address, 1);
             setRes(tx)
-            console.log(tx[0]?.receipt?.transactionHash)
-            console.log(parseInt(tx[0]?.id._hex, 16))
             setLoading(false);
         } catch (e) {
             console.log(e)
@@ -84,6 +82,11 @@ const RewardCard = ({nftRewardContractAddress}) => {
             >
                 {loading ? 'Loading...' : 'Claim'}
             </button>
+            {
+                res && (
+                    <ResCard data={res} setRes={setRes}/>
+                )
+            }
         </div>
     );
 };
