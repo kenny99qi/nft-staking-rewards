@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ThirdwebNftMedia, useContract, useNFT, Web3Button} from "@thirdweb-dev/react";
-import {nftDropContractAddress} from "@/consts/contractAddresses";
 import {useStateContext} from "@/context";
-import {ethers} from "ethers";
 
 const RewardCard = ({nftRewardContractAddress}) => {
     const { contract } = useContract(nftRewardContractAddress, "nft-drop");
@@ -10,6 +8,15 @@ const RewardCard = ({nftRewardContractAddress}) => {
     const {address} = useStateContext()
     const [res, setRes] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [supply, setSupply] = useState(null);
+
+    useEffect(() => {
+        const getInfo = async () => {
+            const supply = await contract?.totalUnclaimedSupply();
+            setSupply(parseInt(supply._hex, 16))
+        }
+        getInfo().then()
+    }, []);
 
     const handleClaim = async () => {
         setLoading(true);
@@ -39,9 +46,27 @@ const RewardCard = ({nftRewardContractAddress}) => {
                 />
             )}
             <h3 className={`
-                                text-center mb-2 text-lg font-bold text-gray-900
+                                text-center mb-2 text-2xl font-bold text-gray-900
                                 `}>{nft?.metadata.name}</h3>
             <p>
+                {
+                    supply && supply > 0 ? (
+                        <span className={`
+                            text-center mb-2 text-lg text-gray-900 font-bold
+                        `}>
+                            {supply} NFTs left
+                        </span>
+                    ) : (
+                        <span className={`
+                            text-center mb-2 text-lg text-gray-900 font-bold
+                        `}>
+                            No NFTs left
+                        </span>)
+                }
+            </p>
+            <p className={`
+                text-center mb-2 text-lg text-gray-900 font-bold
+            `}>
                 Price: {nft?.metadata.price}
             </p>
             <button
