@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {ThirdwebNftMedia} from "@thirdweb-dev/react";
 
 const ResCard = ({data, setRes}) => {
-    const [metadata, setMetadata] = useState(null);
+    const [metadata, setMetadata] = useState(data[0]?.data().then(r => setMetadata(r?.metadata)));
 
-    console.log(data[0]?.data().then(r => setMetadata(r?.metadata)))
+
 
     return (
         <div className={`
