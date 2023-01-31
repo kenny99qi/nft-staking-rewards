@@ -90,15 +90,19 @@ const Staking = () => {
                             <div className={`
                                 flex font-bold text-2xl
                             `}>
-                                <AnimatedNumbers
-                                    animateToNumber={!claimableRewards
+                                {
+                                    !claimableRewards
                                         ? "Loading..."
-                                        : ethers.utils.formatUnits(claimableRewards, 18)}
-                                    fontStyle={{ fontSize: 25 }}
-                                    configs={(number, index) => {
-                                        return { mass: 1, tension: 230 * (index + 1), friction: 140 };
-                                    }}
-                                ></AnimatedNumbers>
+                                        : <AnimatedNumbers
+                                            animateToNumber={!claimableRewards
+                                                ? "Loading..."
+                                                : ethers.utils.formatUnits(claimableRewards, 18)}
+                                            fontStyle={{ fontSize: 25 }}
+                                            configs={(number, index) => {
+                                                return { mass: 1, tension: 230 * (index + 1), friction: 140 };
+                                            }}
+                                        ></AnimatedNumbers>
+                                }
                                 &nbsp;
                                 {tokenBalance?.symbol}
 
