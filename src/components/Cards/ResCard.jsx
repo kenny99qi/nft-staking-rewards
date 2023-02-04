@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {ThirdwebNftMedia} from "@thirdweb-dev/react";
+import Image from "next/image";
 
 const ResCard = ({data, setRes}) => {
     const [metadata, setMetadata] = useState(data[0]?.data().then(r => setMetadata(r?.metadata)));
@@ -38,7 +39,7 @@ const ResCard = ({data, setRes}) => {
                     {data[0]?.receipt?.transactionHash.split('').slice(-10).join('')}
                 </a>
 
-            <img src={metadata?.image} alt="" className={`w-64 h-64 rounded-lg mb-5 shadow-xl`}/>
+            <Image src={metadata?.image} alt="" className={`w-64 h-64 rounded-lg mb-5 shadow-xl`}/>
             <button className={`
                 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded
             `} onClick={

@@ -5,9 +5,8 @@ import {useStateContext} from "@/context";
 import {nftRewardContractAddress} from "@/consts/contractAddresses";
 import RewardCard from "@/components/Cards/RewardCard";
 
-const redeem = () => {
-    const { contract, isLoading, address, nftDropContract,
-        tokenContract, ownedNfts, tokenBalance, stakedTokens, } = useStateContext()
+const Redeem = () => {
+    const { isLoading, address,tokenBalance} = useStateContext()
 
     return (
         <div className={`
@@ -63,4 +62,4 @@ const redeem = () => {
     );
 };
 
-export default redeem;
+export default Redeem;
