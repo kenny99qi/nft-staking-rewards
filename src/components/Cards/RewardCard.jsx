@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ConnectWallet, ThirdwebNftMedia, useContract, useNFT, Web3Button} from "@thirdweb-dev/react";
 import {useStateContext} from "@/context";
-import {ethers} from "ethers";
+import {BigNumber, ethers} from "ethers";
 import ResCard from "@/components/Cards/ResCard";
 
 const RewardCard = ({nftRewardContractAddress}) => {
@@ -21,7 +21,7 @@ const RewardCard = ({nftRewardContractAddress}) => {
             setSupply(parseInt(supply?._hex, 16))
         }
         getInfo().then()
-    }, []);
+    }, [contract]);
 
     const handleClaim = async () => {
         setLoading(true);
