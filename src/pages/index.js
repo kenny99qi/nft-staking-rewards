@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import {ConnectWallet} from "@thirdweb-dev/react";
+import RewardCard from "@/components/Cards/RewardCard";
+import React from "react";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,16 +18,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="
-        flex flex-col items-center justify-center min-h-screen py-2
-        bg-gradient-to-r from-blue-400 to-blue-600
+        flex flex-col items-center justify-center py-2 min-h-screen
+        bg-white dark:bg-gray-900
       ">
-        <ConnectWallet
-            auth={{
-              loginOptional: false,
-            }}
-            colorMode={"light"}
-            accentColor={"#fff"}
-        />
+          <h1 className="text-4xl font-bold">Stake & Rewards</h1>
+          <h2>
+              Claim the NFTs below to stake them and earn rewards.
+          </h2>
+          <RewardCard nftRewardContractAddress={"0x33B86e9e1157D1D02204E797C31042cbc397c82d"} />
       </main>
     </>
   )

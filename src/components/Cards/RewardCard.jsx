@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ThirdwebNftMedia, useContract, useNFT, Web3Button} from "@thirdweb-dev/react";
+import {ConnectWallet, ThirdwebNftMedia, useContract, useNFT, Web3Button} from "@thirdweb-dev/react";
 import {useStateContext} from "@/context";
 import {ethers} from "ethers";
 import ResCard from "@/components/Cards/ResCard";
@@ -74,14 +74,22 @@ const RewardCard = ({nftRewardContractAddress}) => {
                 condition?.currencyMetadata.displayValue
             } {condition?.currencyMetadata.symbol}
             </p>
-            <button
-                className={`
+            {
+                !address ? (
+                    <ConnectWallet />
+                ) : (
+                    <button
+                        className={`
                     bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded
                 `}
-                onClick={handleClaim}
-            >
-                {loading ? 'Loading...' : 'Claim'}
-            </button>
+                        onClick={handleClaim}
+                    >
+
+                        {loading ? 'Loading...' : 'Claim'}
+                    </button>
+                )
+            }
+
             {
                 res && (
                     <ResCard data={res} setRes={setRes}/>
